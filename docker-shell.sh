@@ -5,8 +5,8 @@ set -e
 export IMAGE_NAME=model-training-cli
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../secrets/
-export GCS_BUCKET_URI="gs://mushroom-app-trainer"
-export GCP_PROJECT="mlproject01-207413"
+export GCS_BUCKET_URI="gs://mushroom-app-trainer-code"
+export GCP_PROJECT="ac215-project"
 
 
 # Build the image based on the Dockerfile

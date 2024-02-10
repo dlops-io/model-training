@@ -3,13 +3,13 @@
 
 export UUID=$(openssl rand -hex 6)
 export DISPLAY_NAME="mushroom_training_multi_gpu_job_$UUID"
-export MACHINE_TYPE="n1-standard-4"
+export MACHINE_TYPE="n1-standard-32"
 export REPLICA_COUNT=1
 export EXECUTOR_IMAGE_URI="us-docker.pkg.dev/vertex-ai/training/tf-gpu.2-12.py310:latest"
 export PYTHON_PACKAGE_URI=$GCS_BUCKET_URI/mushroom-app-trainer.tar.gz
 export PYTHON_MODULE="trainer.task_multi_gpu"
-export ACCELERATOR_TYPE="NVIDIA_TESLA_T4"
-export ACCELERATOR_COUNT=2
+export ACCELERATOR_TYPE="NVIDIA_TESLA_V100"
+export ACCELERATOR_COUNT=4
 export GCP_REGION="us-central1" # Adjust region based on you approved quotas for GPUs
 
 export CMDARGS="--model_name=mobilenetv2,--epochs=30,--batch_size=32,--wandb_key=$WANDB_KEY"
