@@ -19,19 +19,19 @@ export GCP_REGION="us-central1" # Adjust region based on you approved quotas for
 export CMDARGS="--model_name=mobilenetv2,--train_base,--epochs=2,--batch_size=32,--wandb_key=$WANDB_KEY"
 
 # Run training with GPU
-gcloud ai custom-jobs create \
-  --region=$GCP_REGION \
-  --display-name=$DISPLAY_NAME \
-  --python-package-uris=$PYTHON_PACKAGE_URI \
-  --worker-pool-spec=machine-type=$MACHINE_TYPE,replica-count=$REPLICA_COUNT,accelerator-type=$ACCELERATOR_TYPE,accelerator-count=$ACCELERATOR_COUNT,executor-image-uri=$EXECUTOR_IMAGE_URI,python-module=$PYTHON_MODULE \
-  --args=$CMDARGS
-
-
-# Run training with No GPU
-# export EXECUTOR_IMAGE_URI="us-docker.pkg.dev/vertex-ai/training/tf-cpu.2-14.py310:latest"
 # gcloud ai custom-jobs create \
 #   --region=$GCP_REGION \
 #   --display-name=$DISPLAY_NAME \
 #   --python-package-uris=$PYTHON_PACKAGE_URI \
-#   --worker-pool-spec=machine-type=$MACHINE_TYPE,replica-count=$REPLICA_COUNT,executor-image-uri=$EXECUTOR_IMAGE_URI,python-module=$PYTHON_MODULE \
+#   --worker-pool-spec=machine-type=$MACHINE_TYPE,replica-count=$REPLICA_COUNT,accelerator-type=$ACCELERATOR_TYPE,accelerator-count=$ACCELERATOR_COUNT,executor-image-uri=$EXECUTOR_IMAGE_URI,python-module=$PYTHON_MODULE \
 #   --args=$CMDARGS
+
+
+# Run training with No GPU
+export EXECUTOR_IMAGE_URI="us-docker.pkg.dev/vertex-ai/training/tf-cpu.2-14.py310:latest"
+gcloud ai custom-jobs create \
+  --region=$GCP_REGION \
+  --display-name=$DISPLAY_NAME \
+  --python-package-uris=$PYTHON_PACKAGE_URI \
+  --worker-pool-spec=machine-type=$MACHINE_TYPE,replica-count=$REPLICA_COUNT,executor-image-uri=$EXECUTOR_IMAGE_URI,python-module=$PYTHON_MODULE \
+  --args=$CMDARGS
