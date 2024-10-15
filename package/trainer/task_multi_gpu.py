@@ -95,7 +95,7 @@ def download_file(packet_url, base_path="", extract=False, headers=None):
 # Download Data
 start_time = time.time()
 download_file(
-    "https://github.com/dlops-io/datasets/releases/download/v1.0/mushrooms_3_labels.zip",
+    "https://github.com/dlops-io/datasets/releases/download/v4.0/cheese_4_labels.zip",
     base_path="datasets",
     extract=True,
 )
@@ -103,7 +103,7 @@ execution_time = (time.time() - start_time) / 60.0
 print("Download execution time (mins)", execution_time)
 
 # Load Data
-base_path = os.path.join("datasets", "mushrooms")
+base_path = os.path.join("datasets", "cheese")
 label_names = os.listdir(base_path)
 print("Labels:", label_names)
 
@@ -328,7 +328,7 @@ with strategy.scope():
 
 # Initialize a W&B run
 wandb.init(
-    project="mushroom-training-multi-gpu-vertex-ai",
+    project="cheese-training-multi-gpu-vertex-ai",
     config={
         "learning_rate": learning_rate,
         "epochs": epochs,

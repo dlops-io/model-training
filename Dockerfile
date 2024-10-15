@@ -45,4 +45,4 @@ WORKDIR /app
 ADD --chown=app:app . /app
 
 # Start a new shell to use the installed SDK
-ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]y
+ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]

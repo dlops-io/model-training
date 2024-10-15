@@ -16,8 +16,6 @@ from tensorflow.python.keras.utils.layer_utils import count_params
 # sklearn
 from sklearn.model_selection import train_test_split
 
-# Tensorflow Hub
-import tensorflow_hub as hub
 
 # W&B
 import wandb
@@ -95,7 +93,7 @@ def download_file(packet_url, base_path="", extract=False, headers=None):
 # Download Data
 start_time = time.time()
 download_file(
-    "https://github.com/dlops-io/datasets/releases/download/v1.0/mushrooms_3_labels.zip",
+    "https://github.com/dlops-io/datasets/releases/download/v4.0/cheese_4_labels.zip",
     base_path="datasets",
     extract=True,
 )
@@ -103,7 +101,7 @@ execution_time = (time.time() - start_time) / 60.0
 print("Download execution time (mins)", execution_time)
 
 # Load Data
-base_path = os.path.join("datasets", "mushrooms")
+base_path = os.path.join("datasets", "cheese")
 label_names = os.listdir(base_path)
 print("Labels:", label_names)
 
@@ -273,42 +271,6 @@ def build_mobilenet_model(
     return model
 
 
-def build_model_tfhub(
-    image_height, image_width, num_channels, num_classes, model_name, train_base=False
-):
-    # Model input
-    input_shape = [image_height, image_width, num_channels]  # height, width, channels
-
-    # Handle to pretrained model
-    handle = "https://tfhub.dev/google/imagenet/mobilenet_v2_100_224/feature_vector/4"
-
-    # Regularize using L1
-    kernel_weight = 0.02
-    bias_weight = 0.02
-
-    model = Sequential(
-        [
-            keras.layers.InputLayer(input_shape=input_shape),
-            hub.KerasLayer(handle, trainable=train_base),
-            keras.layers.Dense(
-                units=64,
-                activation="relu",
-                kernel_regularizer=keras.regularizers.l1(kernel_weight),
-                bias_regularizer=keras.regularizers.l1(bias_weight),
-            ),
-            keras.layers.Dense(
-                units=num_classes,
-                activation="softmax",
-                kernel_regularizer=keras.regularizers.l1(kernel_weight),
-                bias_regularizer=keras.regularizers.l1(bias_weight),
-            ),
-        ],
-        name=model_name + "_train_base_" + str(train_base),
-    )
-
-    return model
-
-
 print("Train model")
 ############################
 # Training Params
@@ -333,46 +295,28 @@ train_data, validation_data, test_data = get_dataset(
     batch_size=batch_size,
 )
 
-if model_name == "mobilenetv2":
-    # Model
-    model = build_mobilenet_model(
-        image_height,
-        image_width,
-        num_channels,
-        num_classes,
-        model_name,
-        train_base=train_base,
-    )
-    # Optimizer
-    optimizer = keras.optimizers.SGD(learning_rate=learning_rate)
-    # Loss
-    loss = keras.losses.categorical_crossentropy
-    # Print the model architecture
-    print(model.summary())
-    # Compile
-    model.compile(loss=loss, optimizer=optimizer, metrics=["accuracy"])
-elif model_name == "tfhub_mobilenetv2":
-    # Model
-    model = build_model_tfhub(
-        image_height,
-        image_width,
-        num_channels,
-        num_classes,
-        model_name,
-        train_base=train_base,
-    )
-    # Optimizer
-    optimizer = keras.optimizers.SGD(learning_rate=learning_rate)
-    # Loss
-    loss = keras.losses.categorical_crossentropy
-    # Print the model architecture
-    print(model.summary())
-    # Compile
-    model.compile(loss=loss, optimizer=optimizer, metrics=["accuracy"])
+
+# Model
+model = build_mobilenet_model(
+    image_height,
+    image_width,
+    num_channels,
+    num_classes,
+    model_name,
+    train_base=train_base,
+)
+# Optimizer
+optimizer = keras.optimizers.SGD(learning_rate=learning_rate)
+# Loss
+loss = keras.losses.categorical_crossentropy
+# Print the model architecture
+print(model.summary())
+# Compile
+model.compile(loss=loss, optimizer=optimizer, metrics=["accuracy"])
 
 # Initialize a W&B run
 wandb.init(
-    project="mushroom-training-vertex-ai",
+    project="cheese-training-vertex-ai",
     config={
         "learning_rate": learning_rate,
         "epochs": epochs,

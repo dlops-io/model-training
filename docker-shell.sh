@@ -5,7 +5,7 @@ set -e
 export IMAGE_NAME=model-training-cli
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../secrets/
-export GCS_BUCKET_URI="gs://mushroom-app-trainer-code"
+export GCS_BUCKET_URI="gs://cheese-app-trainer"
 export GCP_PROJECT="ac215-project"
 
 

@@ -1,4 +1,4 @@
-# Mushroom App: Serverless Model Training Demo
+# Cheese App: Serverless Model Training Demo
 
 In this tutorial we will move code from notebooks to a python file and then perform serverless training jobs using Vertex AI:
 <img src="serverless-training.png"  width="800">
@@ -6,19 +6,7 @@ In this tutorial we will move code from notebooks to a python file and then perf
 ## Prerequisites
 * Have Docker installed
 * Cloned this repository to your local machine with a terminal up and running
-* Check that your Docker is running with the following command
 
-`docker run hello-world`
-
-### Install Docker 
-Install `Docker Desktop`
-
-#### Ensure Docker Memory
-- To make sure we can run multiple container go to Docker>Preferences>Resources and in "Memory" make sure you have selected > 4GB
-
-### Install VSCode  
-Follow the [instructions](https://code.visualstudio.com/download) for your operating system.  
-If you already have a preferred text editor, skip this step.  
 
 ## Setup Environments
 In this tutorial we will setup a container to manage packaging python code for training and creating jobs on Vertex AI (AI Platform) to run training tasks.
@@ -80,7 +68,7 @@ Your folder structure should look like this:
 We need a bucket to store the packaged python files that we will use for training.
 
 - Go to `https://console.cloud.google.com/storage/browser`
-- Create a bucket `mushroom-app-trainer` [REPLACE WITH YOUR BUCKET NAME]
+- Create a bucket `cheese-app-trainer` [REPLACE WITH YOUR BUCKET NAME]
 
 ### Get WandB Account API Key
 
@@ -94,17 +82,18 @@ We want to track our model training runs using WandB. Get the API Key for WandB:
 
 ## Run Container
 
-### Run `docker-shell.sh` or `docker-shell.bat`
-Based on your OS, run the startup script to make building & running the container easy
+### Run `docker-shell.sh`
+Run the startup script to make building & running the container easy
 
 This is what your `docker-shell` file will look like:
 ```
 export IMAGE_NAME=model-training-cli
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../secrets/
-export GCS_BUCKET_URI="gs://mushroom-app-trainer" [REPLACE WITH YOUR BUCKET NAME]
-export GCP_PROJECT="mlproject01-207413" [REPLACE WITH YOUR PROJECT]
+export GCS_BUCKET_URI="gs://cheese-app-trainer" [REPLACE WITH YOUR BUCKET NAME]
+export GCP_PROJECT="ac215-project" [REPLACE WITH YOUR PROJECT]
 
+<!-- mlproject01-207413 -->
 
 # Build the image based on the Dockerfile
 docker build -t $IMAGE_NAME -f Dockerfile .
@@ -123,7 +112,7 @@ $IMAGE_NAME
 ```
 
 - Make sure you are inside the `model-training` folder and open a terminal at this location
-- Run `sh docker-shell.sh` or `docker-shell.bat` for windows
+- Run `sh docker-shell.sh`
 - The `docker-shell` file assumes you have the `WANDB_KEY` as an environment variable and is passed into the container
 
 
@@ -133,11 +122,11 @@ $IMAGE_NAME
 - Open & Review `model-training` > `package` > `setup.py`
 - All required third party libraries needed for training are specified in `setup.py`
 - Open & Review `model-training` > `package` > `trainer` > `task.py`
-- All training code for the mushroom app models are present in `task.py`
+- All training code for the cheese app models are present in `task.py`
 
 ### Run `sh package-trainer.sh`
 - This script will create a `trainer.tar.gz` file with all the training code bundled inside it
-- Then this script will upload this packaged file to your GCS bucket can call it `mushroom-app-trainer.tar.gz`
+- Then this script will upload this packaged file to your GCS bucket can call it `cheese-app-trainer.tar.gz`
 
 
 ### Create Jobs in Vertex AI
@@ -170,7 +159,7 @@ $IMAGE_NAME
 
 ### View Training Metrics
 - Go to [WandB](https://wandb.a)
-- Select the project `mushroom-training-vertex-ai`
+- Select the project `cheese-training-vertex-ai`
 - You will view the training metrics tracked and automatically updated
 
 ### OPTIONAL: Multi GPU Training

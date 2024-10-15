@@ -16,13 +16,13 @@ def generate_uuid(length: int = 8) -> str:
 aip.init(project=GCP_PROJECT, location=GCP_REGION, staging_bucket=GCS_BUCKET_URI)
 
 job_id = generate_uuid()
-DISPLAY_NAME = "mushroom_" + job_id
+DISPLAY_NAME = "cheese_" + job_id
 
-TRAIN_IMAGE = "us-docker.pkg.dev/vertex-ai/training/tf-gpu.2-12.py310:latest"
+TRAIN_IMAGE = "us-docker.pkg.dev/vertex-ai/training/tf-gpu.2-14.py310:latest"
 
 job = aip.CustomPythonPackageTrainingJob(
     display_name=DISPLAY_NAME,
-    python_package_gcs_uri=f"{GCS_BUCKET_URI}/mushroom-app-trainer.tar.gz",
+    python_package_gcs_uri=f"{GCS_BUCKET_URI}/cheese-app-trainer.tar.gz",
     python_module_name="trainer.task",
     container_uri=TRAIN_IMAGE,
     project=GCP_PROJECT,
@@ -34,7 +34,7 @@ TRAIN_COMPUTE = "n1-standard-4"
 TRAIN_GPU = "NVIDIA_TESLA_T4"
 TRAIN_NGPU = 1
 
-print(f"{GCS_BUCKET_URI}/mushroom-app-trainer.tar.gz")
+print(f"{GCS_BUCKET_URI}/cheese-app-trainer.tar.gz")
 print(TRAIN_IMAGE)
 
 # Run the training job on Vertex AI
