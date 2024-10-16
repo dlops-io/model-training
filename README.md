@@ -158,7 +158,7 @@ $IMAGE_NAME
 - You will see the newly created job ready to be provisioned to run. 
 
 ### View Training Metrics
-- Go to [WandB](https://wandb.a)
+- Go to [WandB](https://wandb.ai)
 - Select the project `cheese-training-vertex-ai`
 - You will view the training metrics tracked and automatically updated
 
