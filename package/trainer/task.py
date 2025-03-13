@@ -91,6 +91,7 @@ def download_file(packet_url, base_path="", extract=False, headers=None):
 
 
 # Download Data
+print("Downloading data...")
 start_time = time.time()
 download_file(
     "https://github.com/dlops-io/datasets/releases/download/v4.0/cheese_4_labels.zip",
