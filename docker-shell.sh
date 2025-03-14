@@ -2,7 +2,7 @@
 
 set -e
 
-export IMAGE_NAME=model-training-cli
+export IMAGE_NAME="model-training-cli"
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../secrets/
 export GCS_BUCKET_URI="gs://cheese-app-trainer"
