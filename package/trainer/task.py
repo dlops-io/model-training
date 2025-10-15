@@ -176,15 +176,9 @@ def get_dataset(image_width=224, image_height=224, num_channels=3, batch_size=32
     test_processed_y = [label2index[label] for label in test_y]
 
     # Converts to y to binary class matrix (One-hot-encoded)
-    train_processed_y = to_categorical(
-        train_processed_y, num_classes=num_classes, dtype="float32"
-    )
-    validate_processed_y = to_categorical(
-        validate_processed_y, num_classes=num_classes, dtype="float32"
-    )
-    test_processed_y = to_categorical(
-        test_processed_y, num_classes=num_classes, dtype="float32"
-    )
+    train_processed_y = to_categorical(train_processed_y, num_classes=num_classes)
+    validate_processed_y = to_categorical(validate_processed_y, num_classes=num_classes)
+    test_processed_y = to_categorical(test_processed_y, num_classes=num_classes)
 
     # Create TF Dataset
     train_data = tf.data.Dataset.from_tensor_slices((train_x, train_processed_y))
@@ -333,7 +327,6 @@ training_results = model.fit(
     train_data,
     validation_data=validation_data,
     epochs=epochs,
-    callbacks=[WandbCallback()],
     verbose=1,
 )
 execution_time = (time.time() - start_time) / 60.0
