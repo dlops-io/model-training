@@ -6,7 +6,7 @@ export UUID=$(openssl rand -hex 6)
 export DISPLAY_NAME="cheese_training_job_$UUID"
 export MACHINE_TYPE="n1-standard-4"
 export REPLICA_COUNT=1
-export EXECUTOR_IMAGE_URI="us-docker.pkg.dev/vertex-ai/training/tf-gpu.2-14.py310:latest"
+export EXECUTOR_IMAGE_URI="us-docker.pkg.dev/vertex-ai/training/tf-gpu.2-17.py310:latest"
 export PYTHON_PACKAGE_URI=$GCS_BUCKET_URI/cheese-app-trainer.tar.gz
 export PYTHON_MODULE="trainer.task"
 export ACCELERATOR_TYPE="NVIDIA_TESLA_T4"
@@ -28,7 +28,7 @@ export CMDARGS="--model_name=mobilenetv2,--train_base,--epochs=2,--batch_size=32
 
 
 # Run training with No GPU
-export EXECUTOR_IMAGE_URI="us-docker.pkg.dev/vertex-ai/training/tf-cpu.2-14.py310:latest"
+export EXECUTOR_IMAGE_URI="us-docker.pkg.dev/vertex-ai/training/tf-cpu.2-17.py310:latest"
 gcloud ai custom-jobs create \
   --region=$GCP_REGION \
   --display-name=$DISPLAY_NAME \
